@@ -15,7 +15,7 @@ class LogicaViewModel: ViewModel() {
     fun onChange(dato: String){
         var numTextFielAux:Double = dato.toDouble()
         _uiState.update { currentState -> currentState.copy(
-            numTotal = calculateTip(numTextFielAux),
+            numTotal = calculateTip(numTextFielAux, _uiState.value.porcentaje),
             numTextFiel = numTextFielAux
 
         ) }
@@ -25,5 +25,13 @@ class LogicaViewModel: ViewModel() {
     private fun calculateTip(amount: Double, tipPercent: Double = 15.0): Double {
         val tip = tipPercent / 100 * amount
         return tip
+    }
+
+    fun onChangePorcentaje(it: String) {
+        _uiState.update { currentState -> currentState.copy(
+            numTotal = calculateTip(_uiState.value.numTextFiel, it.toDouble()),
+            porcentaje = it.toDouble()
+
+        ) }
     }
 }

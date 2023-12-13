@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.tiptime.R
 import androidx.lifecycle.viewmodel.compose.viewModel
 
@@ -39,7 +40,7 @@ fun TipTimeLayout(viewModel: LogicaViewModel = viewModel()) {
             text = stringResource(R.string.calculate_tip),
             modifier = Modifier
                 .padding(bottom = 16.dp, top = 40.dp)
-                .align(alignment = Alignment.Start)
+                .align(alignment = Alignment.End)
         )
         EditNumberField(
             Modifier
@@ -49,8 +50,19 @@ fun TipTimeLayout(viewModel: LogicaViewModel = viewModel()) {
             viewModel
         )
         Text(
+            modifier = Modifier.align(alignment = Alignment.CenterHorizontally),
             text = stringResource(R.string.tip_amount, logicaUiState.numTotal),
-            style = MaterialTheme.typography.displaySmall
+            style = MaterialTheme.typography.displaySmall,
+            fontSize = 35.sp,
+            color = Color.Cyan
+        )
+        Spacer(modifier = Modifier.height(15.dp))
+        EditPorcentajeField(
+            Modifier
+            .padding(bottom = 40.dp)
+            .fillMaxWidth(),
+            logicaUiState.porcentaje,
+            viewModel
         )
         Spacer(modifier = Modifier.height(150.dp))
     }
@@ -61,6 +73,15 @@ fun EditNumberField(modifier: Modifier = Modifier,num:Double,viewModel: LogicaVi
     TextField(
         value = num.toString(),
         onValueChange = {viewModel.onChange(it)} ,
+        modifier = modifier
+    )
+}
+
+@Composable
+fun EditPorcentajeField(modifier: Modifier = Modifier, porcentaje:Double,viewModel: LogicaViewModel){
+    TextField(
+        value = porcentaje.toString(),
+        onValueChange =  {viewModel.onChangePorcentaje(it)} ,
         modifier = modifier
     )
 }
